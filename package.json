@@ -1,0 +1,20 @@
+{
+  "name": "accounted",
+  "version": "0.0.1",
+  "description": "SaaS boilerplate - organization &amp; account models &amp; controllers",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpatel/accounted.git"
+  },
+  "author": "Thibaut Patel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tpatel/accounted/issues"
+  },
+  "homepage": "https://github.com/tpatel/accounted#readme"
+}
