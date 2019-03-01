@@ -59,3 +59,15 @@ typings/
 
 # next.js build output
 .next
+
+# IDE directories
+.idea/
+.vscode/
+
+# Typeorm directories
+build/
+tmp/
+temp/
+
+# Local database
+database.db
