@@ -1,3 +1,6 @@
+require('@snyk/nodejs-runtime-agent')({
+  projectId: '97245c66-97e3-436d-a82b-9da37bc4abbf',
+});
 const crypto = require('crypto');
 const organizations = {};
 const accounts = {};
