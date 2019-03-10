@@ -5,7 +5,7 @@
    "main": "index.js",
    "private": true,
    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
+      "test": "mocha -r ts-node/register src/**/*.spec.ts",
       "start": "ts-node src/index.ts"
    },
    "repository": {
@@ -26,8 +26,12 @@
       "typeorm": "0.2.14"
    },
    "devDependencies": {
-      "ts-node": "3.3.0",
+      "@types/chai": "^4.1.7",
+      "@types/mocha": "^5.2.6",
       "@types/node": "^8.0.29",
+      "chai": "^4.2.0",
+      "mocha": "^6.0.2",
+      "ts-node": "^3.3.0",
       "typescript": "2.5.2"
    }
 }

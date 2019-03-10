@@ -1,12 +1,12 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn} from "typeorm";
-import {Account} from "./Account";
-import {Role} from "./Role";
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn} from 'typeorm';
+import {Account} from './Account';
+import {Role} from './Role';
 
 @Entity()
 export class Organization extends BaseEntity {
 
-  @PrimaryGeneratedColumn("uuid")
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @CreateDateColumn()
   created_at: string;
@@ -27,7 +27,7 @@ export class Organization extends BaseEntity {
     organization.name = name;
     await organization.save();
     const role = new Role();
-    role.type = "owner";
+    role.type = 'owner';
     role.organization = organization;
     role.account = owner;
     await role.save();
