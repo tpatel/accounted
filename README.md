@@ -1,2 +1,2 @@
-# accounted ![David](https://img.shields.io/david/tpatel/accounted.svg?style=flat-square) ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/tpatel/accounted.svg?style=flat-square)
+# accounted [![David](https://img.shields.io/david/tpatel/accounted.svg?style=flat-square)](https://david-dm.org/tpatel/accounted) [![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/tpatel/accounted.svg?style=flat-square)](https://snyk.io/test/github/tpatel/accounted) [![Travis (.org)](https://img.shields.io/travis/tpatel/accounted.svg?style=flat-square)](https://travis-ci.org/tpatel/accounted)
 SaaS boilerplate - organization &amp; account models &amp; controllers
