@@ -1,19 +1,27 @@
+require('@snyk/nodejs-runtime-agent')({
+  projectId: '97245c66-97e3-436d-a82b-9da37bc4abbf',
+});
 import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {Account} from "./entity/Account";
+import {Organization} from "./entity/Organization";
+import {Role} from "./entity/Role";
+
 
 createConnection().then(async connection => {
 
-    // console.log("Inserting a new user into the database...");
-    // const user = new User();
-    // user.firstName = "Timber";
-    // user.lastName = "Saw";
-    // user.age = 25;
-    // await connection.manager.save(user);
-    // console.log("Saved a new user with id: " + user.id);
+    try {
+      const account = await Account.registerAccount('Joe', 'joe@example.com', 'password');
+      const organization = await Organization.registerOrganization('Newco', account);
+
+    } catch(e) {console.log(e)}
+
 
     console.log("Loading accounts from the database...");
-    const accounts = await connection.manager.find(Account);
-    console.log("Loaded accounts: ", accounts);
+    const accounts = await connection.manager.find(Account, {relations: ["roles", "roles.organization"]});
+    console.log("Loaded accounts: ", JSON.stringify(accounts, null, 2));
+
+    console.log(await Account.authenticate("joe@example.com", "password"));
+    console.log(await Account.authenticate("joe@example.com", "false"));
 
 }).catch(error => console.log(error));
