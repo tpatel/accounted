@@ -1,10 +1,17 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn} from 'typeorm';
-import {Account} from './Account';
-import {Role} from './Role';
+import {
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Account } from './Account';
+import { Role } from './Role';
 
 @Entity()
 export class Organization extends BaseEntity {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -22,7 +29,10 @@ export class Organization extends BaseEntity {
   @OneToMany(type => Role, role => role.organization)
   roles: Role[];
 
-  static async registerOrganization(name: string, owner: Account): Promise<Organization> {
+  static async registerOrganization(
+    name: string,
+    owner: Account
+  ): Promise<Organization> {
     const organization = new Organization();
     organization.name = name;
     await organization.save();
@@ -33,5 +43,4 @@ export class Organization extends BaseEntity {
     await role.save();
     return organization;
   }
-
 }

@@ -1,7 +1,17 @@
-import {getManager, Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, CreateDateColumn, UpdateDateColumn} from 'typeorm';
-import {Organization} from './Organization';
-import {Token} from './Token';
-import {Role} from './Role';
+import {
+  getManager,
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Organization } from './Organization';
+import { Token } from './Token';
+import { Role } from './Role';
 import * as bcrypt from 'bcrypt';
 
 const saltRounds = 10;
@@ -9,12 +19,11 @@ const emailVerificationType = 'email-verification';
 const passwordResetType = 'passord-reset';
 
 const minute = 60;
-const hour = 60*minute;
-const day = 24*hour;
+const hour = 60 * minute;
+const day = 24 * hour;
 
 @Entity()
 export class Account extends BaseEntity {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -50,8 +59,11 @@ export class Account extends BaseEntity {
   })
   roles: Role[];
 
-
-  static async registerAccount(name: string, email: string, password: string): Promise<Account> {
+  static async registerAccount(
+    name: string,
+    email: string,
+    password: string
+  ): Promise<Account> {
     const account = new Account();
     account.name = name;
     account.email = email;
@@ -65,7 +77,7 @@ export class Account extends BaseEntity {
       .createQueryBuilder(Account, 'account')
       .where('account.email = :email', { email: email })
       .getOne();
-    if(!account) {
+    if (!account) {
       return null;
     }
     const match = await bcrypt.compare(password, account.password_hash);
@@ -77,9 +89,13 @@ export class Account extends BaseEntity {
     this.password_hash = hashed;
   }
 
-  static async updatePassword(email: string, oldPassword: string, newPassword: string): Promise<Account> {
+  static async updatePassword(
+    email: string,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<Account> {
     const account = await Account.authenticate(email, oldPassword);
-    if(!account) {
+    if (!account) {
       return null;
     }
     await account.setPassword(newPassword);
@@ -91,21 +107,25 @@ export class Account extends BaseEntity {
     const token = new Token();
     token.account = this;
     token.type = emailVerificationType;
-    token.ttl = 2*day;
+    token.ttl = 2 * day;
     await token.save();
     return token.id;
   }
 
   async verifyEmail(emailToken: string): Promise<boolean> {
     const token = await getManager()
-      .createQueryBuilder(Token, "token")
-      .innerJoin("token.account", "account", "account.id = :accountId", {accountId: this.id})
-      .where('token.id = :tokenId', {tokenId: emailToken})
-      .andWhere('token.created_at + token.ttl < :now', {now: new Date().toISOString()})
+      .createQueryBuilder(Token, 'token')
+      .innerJoin('token.account', 'account', 'account.id = :accountId', {
+        accountId: this.id,
+      })
+      .where('token.id = :tokenId', { tokenId: emailToken })
+      .andWhere('token.created_at + token.ttl < :now', {
+        now: new Date().toISOString(),
+      })
       .andWhere('token.used = false')
-      .andWhere('token.type = :tokenType', {tokenType: emailVerificationType})
+      .andWhere('token.type = :tokenType', { tokenType: emailVerificationType })
       .getOne();
-    if(!token) {
+    if (!token) {
       return false;
     }
     this.verified_email = true;
@@ -119,20 +139,25 @@ export class Account extends BaseEntity {
     const token = new Token();
     token.account = this;
     token.type = passwordResetType;
-    token.ttl = 15*minute;
+    token.ttl = 15 * minute;
     await token.save();
     return token.id;
   }
 
-  async resetPassword(emailToken: string, newPassword: string): Promise<boolean> {
+  async resetPassword(
+    emailToken: string,
+    newPassword: string
+  ): Promise<boolean> {
     const token = await getManager()
-      .createQueryBuilder(Token, "token")
-      .where('token.id = :tokenId', {tokenId: emailToken})
-      .andWhere('token.created_at + token.ttl < :now', {now: new Date().toISOString()})
+      .createQueryBuilder(Token, 'token')
+      .where('token.id = :tokenId', { tokenId: emailToken })
+      .andWhere('token.created_at + token.ttl < :now', {
+        now: new Date().toISOString(),
+      })
       .andWhere('token.used = false')
-      .andWhere('token.type = :tokenType', {tokenType: passwordResetType})
+      .andWhere('token.type = :tokenType', { tokenType: passwordResetType })
       .getOne();
-    if(!token) {
+    if (!token) {
       return false;
     }
     await this.setPassword(newPassword);
@@ -141,5 +166,4 @@ export class Account extends BaseEntity {
     await token.save();
     return true;
   }
-
 }

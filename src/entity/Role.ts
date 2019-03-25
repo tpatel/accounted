@@ -1,10 +1,19 @@
-import {BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, ManyToOne} from 'typeorm';
-import {Account} from './Account';
-import {Organization} from './Organization';
+import {
+  BaseEntity,
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
+import { Account } from './Account';
+import { Organization } from './Organization';
 
 @Entity()
 export class Role extends BaseEntity {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -24,5 +33,4 @@ export class Role extends BaseEntity {
   @ManyToOne(type => Organization, organization => organization.roles)
   @JoinColumn()
   organization: Organization;
-
 }

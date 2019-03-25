@@ -1,9 +1,17 @@
-import {Entity, BaseEntity, Check, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn} from 'typeorm';
-import {Account} from './Account';
+import {
+  Entity,
+  BaseEntity,
+  Check,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Account } from './Account';
 
 @Entity()
 export class Token extends BaseEntity {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
